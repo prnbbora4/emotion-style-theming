@@ -1,26 +1,35 @@
+import { ThemeProvider } from '@emotion/react'
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Button } from './components/Button'
+import { theme } from './Theme/Theme'
+import ThemeChanger from './Theme/ThemeChanger'
+const App = () => {
+  console.log("theme", theme);
+  const [curTheme, setCurTheme] = React.useState(theme.light);
+  const handleClick = () => {
+    console.log("handleClick");
+  }
+  const handleThemeChange = (themeName: string): void => {
+    console.log("called");
+    setCurTheme(theme[themeName]);
+  }
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={curTheme}>
+      <Button
+        width='120px'
+        height="60px"
+        onClick={handleClick}
+        variant="primary"
+      >Click 🤣</Button>
+
+      <ThemeChanger
+        onChangeTheme={handleThemeChange}
+        themes={Object.keys(theme)}
+        theme={theme}
+      />
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
